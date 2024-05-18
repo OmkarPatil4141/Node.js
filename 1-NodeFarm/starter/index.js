@@ -94,10 +94,33 @@ const DataObject = JSON.parse(inputdata);
 
 const server1 = http.createServer((req,res) =>{
 
-    const path = req.url;
+    // const pathname = req.url;
+    // console.log(req.url);
 
+    /* console.log(url.parse(req.url));  
+                Url {
+                    protocol: null,
+                    slashes: null,
+                    auth: null,
+                    host: null,
+                    port: null,
+                    hostname: null,
+                    hash: null,
+                    search: '?id=0',
+                    query: 'id=0',
+                    pathname: '/product',
+                    path: '/product?id=0',
+                    href: '/product?id=0'
+                    }
+            above object is returned by url.parse(req.url)
+    */
+
+    //lets destructure object 
+
+    const  {query , pathname } = url.parse(req.url,true);
+ 
     //overview page
-    if(path === '/overview' || path === '/')
+    if(pathname === '/overview' || pathname === '/')
     {
         res.writeHead(200,{'Content-type':'text/html'})
         //as we parsed DATAOBJECT so we get array of objects so we have to loop it and give it as a palceholder
@@ -107,13 +130,18 @@ const server1 = http.createServer((req,res) =>{
         res.end(output);
     }
     //product page
-    else if(path === '/product')
+    else if(pathname === '/product')
     {
-        res.end('This is PRODUCT PAGE')
+        res.writeHead(200,{'Content-type':'text/html'})
+
+        const product = DataObject[query.id];
+        const output = replaceTemplate(tempProduct,product)
+
+        res.end(output)
     }
 
     //API
-    else if(path == '/api')
+    else if(pathname == '/api')
     {
         //for each request of /api callback function will be called and data will be fetched
         // instead we will take sysnchronously data only 1 time only 
@@ -143,6 +171,8 @@ const server1 = http.createServer((req,res) =>{
     }
 })
 
+
+//start the server
 
 server1.listen(3003,()=>{
     console.log('Server is running on port 3003...😍');
