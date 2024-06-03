@@ -68,22 +68,14 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 
+const slugify = require('slugify')
+
+//our own module
+const replaceTemplate = require('../Modules/replaceTemplate');
 
 
-const replaceTemplate = (temp,product)=>{
-    let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
-    output = output.replace(/{%IMAGE%}/g, product.image)
-    output = output.replace(/{%FROM%}/g, product.from)
-    output = output.replace(/{%NUTRIENT%}/g, product.nutrients)
-    output = output.replace(/{%QUANTITY%}/g, product.quantity)
-    output = output.replace(/{%PRICE%}/g, product.price)
-    output = output.replace(/{%DESCRIPTION%}/g, product.description)
-    output = output.replace(/{%ID%}/g, product.id)
 
-    if(!product.organic) output.replace(/{%NOT_ORGANIC%}/g, 'not-organic')
-    
-    return output;
-}
+
 
 
 const tempOverview = fs.readFileSync(`${__dirname}/templates/template-overview.html` , 'utf-8')
@@ -91,6 +83,11 @@ const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html` , '
 const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.html` , 'utf-8')
 const inputdata = fs.readFileSync(`${__dirname}/dev-data/data.json`,'utf-8')
 const DataObject = JSON.parse(inputdata);
+
+const slugs = DataObject.map(el => slugify(el.productName,{lower:true}));
+console.log(slugs);
+
+
 
 const server1 = http.createServer((req,res) =>{
 

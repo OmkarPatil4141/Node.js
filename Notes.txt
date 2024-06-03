@@ -1,0 +1,2 @@
+🫵In nodejs every single file is treated as module
+🫵Module is object that we have access to in each and every node js module
