@@ -1,2 +1,20 @@
 🫵In nodejs every single file is treated as module
 🫵Module is object that we have access to in each and every node js module
+
+NPM packages follows semantic version notation three digit --> major version , minor version and patch version
+so new version may affect the code if our code is written in old version.
+
+so we can check packages which are deprecated by command  -------------> npm outdated 
+this command will display table of outdated packages.
+Package  Current Wanted Latest  Location
+slugify   I.O.O  1.3.4   1.3.4
+
+
+we can also download the specific version of any package using -------------> npm i slugify@1.0.0
+
+✅ Instead of ^ (minor and patch releases) this symbol we can use ~ symbol for strictly that patch version which is safe side * symbol bumps all the versions
+
+✅ We can update package by npm update slugify 
+✅ We can delete any package by npm uninstall slugify
+✅ Package.lock.json file contains info about dependancies of dependancies along with versions
+✅ Whenever we share our code must provide Package.lock.json and Package.json file
