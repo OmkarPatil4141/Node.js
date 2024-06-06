@@ -18,3 +18,36 @@ we can also download the specific version of any package using -------------> np
 ✅ We can delete any package by npm uninstall slugify
 ✅ Package.lock.json file contains info about dependancies of dependancies along with versions
 ✅ Whenever we share our code must provide Package.lock.json and Package.json file
+______________________________________________________________________________________________________________________________________
+
+✅ Event loop does the orchestration means it receives events , calls there call back functions, and offloads there more expensive tasks to the thread pool, event loop that makes asynchronous programming possible in node
+
+1.nexttick()
+2.setImmediate()   -> it depends on polling phase 
+3.setTimeout()
+
+/We can change the size of thread pool from 4 to requied
+process.env.UV_THREADPOOL_SIZE = 1 ; //we have decreased it from 4 to 1
+______________________________________________________________________________________________________________________________________
+
+Nodes event driven architecture
+
+Event emmiter ---------------------> Event listner -------> callBacks
+		emits event 			     calls 
+______________________________________________________________________________________________________________________________________
+
+Streams :
+✅ When we read files using Streams , we read part of the data do something with it and free our memory , we repeat this
+until the entire file processing e.g. youtube and netflix follows the same principle --> Instead of loading full videos 
+process by piece by piece
+
+✅ Steams are useful for handling large volumes of data
+
+✅ More efficient in terms of  memory 
+✅ Streams are instances of EventEmmiter class
+
+______________________________________________________________________________________________________________________________________'
+
+✅ require functions is called with a module name as the argument the path to the modules file has been resolved into
+// file loaded all the code has been wrapped into wrapper function which has then executed after execution it will 
+// return exports of required module then after first time loading they are cached 
