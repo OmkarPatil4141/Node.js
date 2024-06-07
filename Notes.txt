@@ -49,5 +49,14 @@ process by piece by piece
 ______________________________________________________________________________________________________________________________________'
 
 ✅ require functions is called with a module name as the argument the path to the modules file has been resolved into
-// file loaded all the code has been wrapped into wrapper function which has then executed after execution it will 
-// return exports of required module then after first time loading they are cached 
+  file loaded all the code has been wrapped into wrapper function which has then executed after execution it will 
+  return exports of required module then after first time loading they are cached 
+
+______________________________________________________________________________________________________________________________________
+Callback hell is just a problem with nested callbacks we can resolve these problem using 
+promises so promises are just like packages which are filled in future means when we are getting 
+data in future in beginning we have promise but it is pending promise once we get data in it
+it becomes resolved promise .
+
+✅ resolved promise eighter can be fullfilled(it have our required data)or rejected(it have error)
+✅ .then(callback) it only deals with fullfilled promises for rejected we have to use catch method
