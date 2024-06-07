@@ -60,3 +60,15 @@ it becomes resolved promise .
 
 ✅ resolved promise eighter can be fullfilled(it have our required data)or rejected(it have error)
 ✅ .then(callback) it only deals with fullfilled promises for rejected we have to use catch method
+______________________________________________________________________________________________________________________________________
+✅ Building promises
+   1. we will return new Promise(resolve,reject) reject have error and resolve(data) this data is then available
+   in then(data=>{}) means resolve getting data passes to then
+   2. if(err) reject("error") whatever in reject then it available to catch(err)
+______________________________________________________________________________________________________________________________________
+✅ Instead of consuming promises with then method , we can use async await 
+✅ async await is also known syntactic sugar for promises
+✅ await always used inside the as function
+✅ Async function returns promises , in order to display we use then method and for error we use catch method but in trys catch we have 
+	to throw error
+✅ Async functions runs in background while other code is in event loop 
