@@ -87,3 +87,14 @@ ________________________________________________________________________________
 ✅ For updating we have 2 methods put and patch
    put -> we expect that our application recieves entire new upsated object 
    patch -> we only expect th properties that actually be updated on object
+______________________________________________________________________________________________________________________________________
+
+
+✅ We can refactor our routes -> app.route().get(------)
+✅ middleware -> request rsponse cycle , starts with incoming request then executing all the middleware
+    in the middleware stack step by step (.next()) and finally sending the response to finish the cycle 
+
+✅   Order lots matter in ✅Express becuse when we put our custom middleware below route it ends req-res cycle
+      means when we keep custom middleware in between gettours and by id 
+
+✅ e.g we require Date at one of the route then we use middleware to fetch the date from req and then use it in route 
