@@ -72,3 +72,18 @@ ________________________________________________________________________________
 ✅ Async function returns promises , in order to display we use then method and for error we use catch method but in trys catch we have 
 	to throw error
 ✅ Async functions runs in background while other code is in event loop 
+______________________________________________________________________________________________________________________________________
+✅Express do not put body dat on to request, hence we have to use middleware
+✅Middleware is just a function that can modify the incoming request data , its called middleware because it stands 
+  between middle in req and res.
+✅ Object.assign({},{}) which allows us to create a new object by merging two existing objects
+✅ app.get('/api/vl/tours/:id, (req, res) => {
+     console. log ( req. params),}) 
+✅Params ->object that  all the parameters of all the variables we defined there are stored (:id in above code )
+
+✅ We can add also optional parameters /:id? now id becomes option means whenever we hitting url we can or cannot specify id
+✅ In javascript if we have one string which is numberer e.g "45" that when multiply with 1 e.g. "45"*1 => 45
+
+✅ For updating we have 2 methods put and patch
+   put -> we expect that our application recieves entire new upsated object 
+   patch -> we only expect th properties that actually be updated on object
