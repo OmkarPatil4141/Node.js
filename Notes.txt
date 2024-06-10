@@ -112,3 +112,10 @@ app.use('/api/v1/users',tourRoute)
 
 ✅ When we use exports. and them we require it in another file we get all that multiple exports in one object
     {so we can destructure it by same names } or we can use that object.name
+
+ ✅WE can keep only middlewares in our app.js 
+ 1->take routes from app.js make them middleware using mounting
+ 2-> put them in routes folder (run and check whether everything is working properly)
+ 3->  take all route handlers and make another folder as controller
+ 4->  paste and export them
+ 5-> require them in routes
