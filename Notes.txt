@@ -98,3 +98,14 @@ ________________________________________________________________________________
       means when we keep custom middleware in between gettours and by id 
 
 ✅ e.g we require Date at one of the route then we use middleware to fetch the date from req and then use it in route 
+
+______________________________________________________________________________________________________________________________________
+Third party middleware function called morgan
+✅ It allows us to see request data right in console 
+
+✅ mounting => in order to use it in different files
+
+const tourRoute = express.Router(); // one separate route for each resource
+const UserRoute = express.Router();
+app.use('/api/v1/tours',tourRoute)
+app.use('/api/v1/users',tourRoute)

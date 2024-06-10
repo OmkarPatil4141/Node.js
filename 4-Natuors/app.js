@@ -1,12 +1,21 @@
-const express = require('express')
 const fs = require('fs')
+const express = require('express')
+const morgan = require('morgan')
 const app = express();
 
-//Middleware
+
+
+///////////////////////////////////////////////////////
+// //Middlewares
+//////////////////////////////////////////////////////
+
 app.use(express.json())
+
+app.use(morgan('dev'))
 
 // Custom Middleware  it is going to run for all requestss
 app.use((req,res,next)=>{
+    console.log("Hello from the Middleware👋");
     req.requestTime = new Date().toISOString();
     next();
 })
@@ -31,6 +40,9 @@ app.post('/',(req, res)=>{
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`))
 
+///////////////////////////////////////////////////////
+// Route handlers
+//////////////////////////////////////////////////////
 const getTours = (req,res)=>{
     console.log(req.requestTime);
     res.status(200).json({
@@ -117,6 +129,42 @@ const createTour = (req,res)=>{
     })   
 }
 
+const getAllUsers = (req,res)=>{
+    res.status(500).json({
+        status : "fail",
+        message : "This route is not yet iplemented"
+    })
+}
+
+const getUser = (req,res)=>{
+    res.status(500).json({
+        status : "fail",
+        message : "This route is not yet iplemented"
+    })
+}
+
+const createUser = (req,res)=>{
+    res.status(500).json({
+        status : "fail",
+        message : "This route is not yet iplemented"
+    })
+}
+
+const updateUser = (req,res)=>{
+    res.status(500).json({
+        status : "fail",
+        message : "This route is not yet iplemented"
+    })
+}
+
+const delteUser = (req,res)=>{
+    res.status(500).json({
+        status : "fail",
+        message : "This route is not yet iplemented"
+    })
+}
+
+
 
 ///////////////////////////////////////////////////////
 // Refactoring code 1
@@ -139,13 +187,27 @@ app.post('/api/v1/tours',createTour)
 ///////////////////////////////////////////////////////
 // Refactoring code 2
 //////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+// //Route 
+//////////////////////////////////////////////////////
 
-app.route('/api/v1/tours').get(getTours).post(createTour)
+//in order to use it in different files
+// one separate route for each resource
+const tourRouter = express.Router();
+const UserRouter = express.Router();
 
-app.route('/api/v1/tours/:id').get(getTour).delete(delteTour).patch(updateTour)
+
+tourRouter.route('/').get(getTours).post(createTour)
+
+tourRouter.route('/:id').get(getTour).delete(delteTour).patch(updateTour)
+
+UserRouter.route('/').get(getAllUsers).post(createUser);
 
 
+UserRouter.route('/:id').get(getUser).patch(updateUser).delete(delteUser);
 
+app.use('/api/v1/tours',tourRouter)
+app.use('/api/v1/users',tourRouter)
 
 
 
