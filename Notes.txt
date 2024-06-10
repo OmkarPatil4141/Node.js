@@ -109,3 +109,6 @@ const tourRoute = express.Router(); // one separate route for each resource
 const UserRoute = express.Router();
 app.use('/api/v1/tours',tourRoute)
 app.use('/api/v1/users',tourRoute)
+
+✅ When we use exports. and them we require it in another file we get all that multiple exports in one object
+    {so we can destructure it by same names } or we can use that object.name

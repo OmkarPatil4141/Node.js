@@ -38,10 +38,10 @@ app.post('/',(req, res)=>{
 
 */
 
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`))
+/*const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`))
 
 ///////////////////////////////////////////////////////
-// Route handlers
+// Route handlers for tours
 //////////////////////////////////////////////////////
 const getTours = (req,res)=>{
     console.log(req.requestTime);
@@ -127,8 +127,13 @@ const createTour = (req,res)=>{
             }
         })
     })   
-}
+} */
 
+///////////////////////////////////////////////////////
+// Route handlers for user
+//////////////////////////////////////////////////////
+
+/*
 const getAllUsers = (req,res)=>{
     res.status(500).json({
         status : "fail",
@@ -163,6 +168,8 @@ const delteUser = (req,res)=>{
         message : "This route is not yet iplemented"
     })
 }
+    
+*/
 
 
 
@@ -191,23 +198,21 @@ app.post('/api/v1/tours',createTour)
 // //Route 
 //////////////////////////////////////////////////////
 
-//in order to use it in different files
+//in order to use it in different files (routes folder)
 // one separate route for each resource
-const tourRouter = express.Router();
-const UserRouter = express.Router();
+const tourRouter = require('./routes/tourRoutes');
+const UserRouter = require('./routes/userRoutes');
 
 
-tourRouter.route('/').get(getTours).post(createTour)
+//tourRouter.route('/').get(getTours).post(createTour)
 
-tourRouter.route('/:id').get(getTour).delete(delteTour).patch(updateTour)
+//tourRouter.route('/:id').get(getTour).delete(delteTour).patch(updateTour)
 
-UserRouter.route('/').get(getAllUsers).post(createUser);
-
-
-UserRouter.route('/:id').get(getUser).patch(updateUser).delete(delteUser);
+// UserRouter.route('/').get(getAllUsers).post(createUser);
+// UserRouter.route('/:id').get(getUser).patch(updateUser).delete(delteUser);
 
 app.use('/api/v1/tours',tourRouter)
-app.use('/api/v1/users',tourRouter)
+app.use('/api/v1/users',UserRouter)
 
 
 
