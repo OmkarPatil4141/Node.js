@@ -119,3 +119,28 @@ app.use('/api/v1/users',tourRoute)
  3->  take all route handlers and make another folder as controller
  4->  paste and export them
  5-> require them in routes
+ 6-> create server .js in which put all the server/db related things 
+ 7-> export our app from app.js (because we keep all the things related to expreess in app)
+ ✅ Param middleware is the middleware that only runs with certain parameters
+    in Param middleware function we actually get access to a fourth argument which is the 
+    value of parameter in question
+
+______________________________________________________________________________________________________________________________________
+✅ These is known as chaining middlewares ->
+    router.route('/').get(tourController.getTours).post(tourController.createTour)
+    if we want to add middleware for any perticular method e.g. post(), then 
+    just add as a first parameter e.g. post(middlewarefunction ,tourController.createTour)
+
+✅ we can serve static files from a folder from not a route then we have to use inbult middleware as
+
+   app.use(express.static('dir_name'))  for each part of website there is different request
+
+✅ environment variables : NODE ENV=development nodemon server. js
+   instead of keeping all environment in command we can keep them in one file
+   1. create file
+   2. put variables in it
+   3. npm i dotenv
+   4. require dotenv and 
+
+
+✅ npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev

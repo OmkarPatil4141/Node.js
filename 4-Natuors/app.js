@@ -1,4 +1,3 @@
-const fs = require('fs')
 const express = require('express')
 const morgan = require('morgan')
 const app = express();
@@ -9,9 +8,15 @@ const app = express();
 // //Middlewares
 //////////////////////////////////////////////////////
 
-app.use(express.json())
+if(process.env.NODE_ENV === 'development')
+{
+    app.use(morgan('dev'))
+    console.log(process.env.NODE_ENV);
 
-app.use(morgan('dev'))
+}
+
+app.use(express.json())
+app.use(express.static(`${__dirname}/public`))
 
 // Custom Middleware  it is going to run for all requestss
 app.use((req,res,next)=>{
@@ -215,9 +220,4 @@ app.use('/api/v1/tours',tourRouter)
 app.use('/api/v1/users',UserRouter)
 
 
-
-//we can start server in this way
-const port = 3000;
-app.listen(port,()=>{
-    console.log(`Server is started on port ${port}..And waiting for requests`);
-})
+module.exports = app

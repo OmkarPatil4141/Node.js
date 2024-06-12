@@ -2,6 +2,42 @@ const fs = require('fs')
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
 
+
+
+
+
+//instead of using smae code thrice we can check id is valid or not only once 
+exports.checkId = (req,res,next,val)=>{
+    console.log(`The value of id is: ${val}`);
+    if(req.params.id * 1 > tours.length)
+        {
+           return res.status(400).json({
+                status : "failed",
+                message : "invalid id"
+            })
+        }
+
+        next();
+}
+
+// Create a checkBody middleware
+// Check if body contains the name and price property
+// If not, send back 400 (bad request)
+// Add it to the post handler stack
+exports.checkBody = (req,res,next)  =>{ 
+
+    if(!req.body.name || !req.body.price )
+    {
+        return res.status(400).json({
+            status : "fail",
+            message : "Missing name or price"
+        })
+    }
+
+    next();
+}
+
+
 ///////////////////////////////////////////////////////
 // Route handlers
 //////////////////////////////////////////////////////
@@ -19,15 +55,16 @@ const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-si
  exports.getTour = (req,res)=>{
     
     const id = req.params['id'] * 1; //as everything coming from object is string just typecasted
-   // const id = req.params.id * 1;
+//    const id = req.params.id * 1;
    const tour = tours.find(ele => ele.id === id)
-   if(!tour)
-   {
-       return res.status(400).json({            //return because only one response in order to invalid id
-           status :"Fail",
-           message : "Invalid Id"
-       })
-   }
+   
+//    if(!tour)
+//    {
+//        return res.status(400).json({            //return because only one response in order to invalid id
+//            status :"Fail",
+//            message : "Invalid Id"
+//        })
+//    }
    res.status(200).json({
        status :"suceess",
        data : {
@@ -37,14 +74,6 @@ const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-si
 }
 
  exports.delteTour = (req,res)=>{
-
-    if(req.params.id * 1 > tours.length)
-    {
-       return res.status(400).json({
-            status : "failed",
-            message : "invalid id"
-        })
-    }
 
     res.status(204).json({  //204 -> no content     
         status : "Success",
