@@ -144,3 +144,16 @@ ________________________________________________________________________________
 
 
 ✅ npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev
+______________________________________________________________________________________________________________________________________________________________________________________________________
+
+🔥Mongoose
+✅ Mongoose is object data modelling (ODM) library for MongoDB and Node js , gives higher level of abstraction
+✅ Mongoose allows for rapid and simple development of mongodb datdabase interactions
+✅ Featues : 1.schemas to model data and relationships 
+              2. Easy data Validation
+              3. simple query API
+              4.middleware etc   
+✅ Mongoose schema : where we model our data by describing the structure of the data , default values and Validation
+
+✅ Mongoose -> models (to create model we requires schema) -> blueprints -> we use to create document
+
