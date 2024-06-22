@@ -156,4 +156,58 @@ ________________________________________________________________________________
 ✅ Mongoose schema : where we model our data by describing the structure of the data , default values and Validation
 
 ✅ Mongoose -> models (to create model we requires schema) -> blueprints -> we use to create document
+_____________________________________________________________________________________________________________________________________
+✅ We can create document by two ways 
+1. schema , model , save({});
+2. model.create({});
+
+✅ If we trying to do add more fields than schema the it will simply ignores that field
+   and add only specified fields.
+
+✅ req.query() --> gives us the object which we passed as a query #express functionality
+
+✅ In mongoose there are two ways to writing database queries
+   1. using filter object
+   2. using some special mongoose methods
+
+✅ If we have to create shallow copy of a object then we can simply destructure the object 
+      e.g const newShallowCopyObj = {...req.query};
+
+✅ Query.prototype() means we query chya instance s vr methods apply kru shkto 
+      mhnun we use karu shkto different methods mhnje ch chaining
+
+✅ In order to use chain multiple methods we build the query first and then execute it
+_____________________________________________________________________________________________________________________________________
+
+✅Aggregation pipeline -> powerful framework for data Aggregation
+   All documents from certain colection passes through pipeline inorder to transform
+   them into a aggreagate results
+   e.g we can use it to calculate Average , min and max values
+
+_____________________________________________________________________________________________________________________________________
+✅ Virtual properties are the fields that we can define on our schema but that not will persisted
+      so that will not be saved into database
+✅ Used for the fields that can be derived from one another e.g.  conversion of miles to KM
+
+✅ We use regular functions in mongoose because ()=> arrow function does not have access to
+      to this keyword , and this is referes to current document in this functions 
+✅ we can use it along with schema defination{} ,{toJSON:{virtuals:true},toObject:{virtuals:true}}schema options
+✅ We cannot use Virtual property in queries ass they are not part of database
+_____________________________________________________________________________________________________________________________________
+✅ document middleware -> pre and post 
+   1.pre ('hookName',function(next)) we have access to current doc by this
+   2. post ('hookName',function(doc,next)) we have access to document directly
+//DOCUMENT middleware : runs after only .save(), .create()
+tourSchema.post('save',function(doc,next) {
+    console.log(doc);
+    next();
+});
+
+_____________________________________________________________________________________________________________________________________
+✅ Query middleware -> pre and post query execution 
+      we have access to query object
+✅ Aggregation middleware -> pre and post means before Aggregation and after Aggregation
+
+      we simply have to use in all of the Aggregations so we can simply not copy paste at all places
+_____________________________________________________________________________________________________________________________________
 

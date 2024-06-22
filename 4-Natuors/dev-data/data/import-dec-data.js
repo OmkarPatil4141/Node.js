@@ -5,15 +5,18 @@ const mongoose = require('mongoose');
 const Tour = require('../../Models/tourModel');
 
 // Load environment variables from .env file
-dotenv.config({path: './config.env'});
+dotenv.config({path: '../../config.env'});
 
 console.log(process.env.DATABASE);
 
+// const DB = "mongodb+srv://Omkar:FcGPGbv5NV3t4X$@cluster0.9g87d.mongodb.net/natours?retryWrites=true&w=majority&appName=Cluster0"
+
 // Replace <password> with the actual password from the environment variable, URL-encoded
-/*const DB = process.env.DATABASE.replace(
+const DB = process.env.DATABASE.replace(
   '<password>',
   encodeURIComponent(process.env.DB_PASSWORD)
 );
+
 
 mongoose.connect(DB, {
     useCreateIndex: true,
@@ -22,7 +25,7 @@ mongoose.connect(DB, {
     useUnifiedTopology: true
 }).then(() => console.log("DB connection successful✅........."))
   .catch(err => console.error('DB connection error:', err));
-*/
+
 // Read file synchronously
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8'));
 
