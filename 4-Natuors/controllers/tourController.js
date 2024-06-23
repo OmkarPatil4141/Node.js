@@ -2,7 +2,11 @@
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
 
 const Tour = require('../Models/tourModel')
-const APIFeature = require('../utils/apiFeatures')
+const APIFeature = require('../utils/apiFeatures');
+
+const AppError = require('../utils/appError');
+
+const catchAsync = require('../utils/catchAsync')
 
 exports.aliasTopTours = (req,res,next) =>{
 
@@ -35,8 +39,7 @@ testTour
 ///////////////////////////////////////////////////////
 // Route handlers
 //////////////////////////////////////////////////////
-exports.getMonthlyPlan = async(req,res)=>{
-    try{
+exports.getMonthlyPlan = catchAsync(async(req,res,next)=>{
 
         const year = req.params.year * 1;
         const plan = await Tour.aggregate([
@@ -72,28 +75,20 @@ exports.getMonthlyPlan = async(req,res)=>{
             }
 
         ])
-
-
         res.status(200).json({
             status:"success",
             // size:plan.length,
             data : {
                 plan
             }
+        })
+    
+});
 
-        })
-    }
-    catch(err){
-        res.status(400).json({
-            status:"fail",
-            message: err
-        })
-    }
-}
-exports.getTourStats = async(req,res)=>{
-    try{ 
+exports.getTourStats = catchAsync(async(req,res,next)=>{
+     
         // each element in array is one stage
-        //one obbject is one stage  
+        //one object is one stage  
         const stats = await Tour.aggregate([
             {
                 $match:{ ratingsAverage: {$gte:4.5} }
@@ -123,52 +118,33 @@ exports.getTourStats = async(req,res)=>{
             data : {
                 stats
             }
-
         })
 
-    }
-    catch(err){
-        res.status(400).json({
-            status:"fail",
-            message: err
-        })
-    }
-}
+})
+
+
+//////////////////////////////////////////
+//  CatchAsync to remove try catch 
+/////////////////////////////////////////
 
 
 
 /////////////////////////////////
 //Method 1 of creating document ->Tour.create({})
 ////////////////////////////////
-exports.createTour = async(req,res) =>
-    {
-        try
-        {
-            const newTour = await Tour.create(req.body);
-            res.status(200).json({
-                status:"success",
-                dats : {
-                    tour : newTour
-                }
-
-            })
-
-        }
-        catch(err)
-        {
-            res.status(400).json({
-                status:"fail",
-                message: err
-            })
-        }
-        
-        
+exports.createTour = catchAsync(async(req,res,next) =>{
+    
+    const newTour = await Tour.create(req.body);
+    res.status(200).json({
+    status:"success",
+    dats : {
+    tour : newTour
     }
+    })
+    })
 
- exports.getTours = async(req,res)=>{
-    try
-    {
-        
+ exports.getTours = catchAsync(async(req,res,next)=>{
+  
     //Execute Query
     const features = new APIFeature(Tour.find(),req.query).filter().sort().limitFields().paginate();
     const tours = await features.query;
@@ -180,51 +156,42 @@ exports.createTour = async(req,res) =>
                 tours
             }
         })
-    }
-    catch(err)
-    {
-        res.status(200).json({
-            "status":"fail",
-            message:err
-        })
-    }
-        
-}
+    })
+   
 
- exports.getTour = async(req,res)=>{
-    
-    try
-    {
+ exports.getTour = catchAsync(async(req,res,next)=>{
+   
         const tour = await Tour.findById(req.params.id);
         // instead by findID we can use findone like
         // Tour.findOne({_id:666d7cd402379557e484e691})
+
+        //added 404 error with 
+        if(!tour)
+        {
+            return next(new AppError('No tour found with that id',404))
+        }
         res.status(200).json({
             "status":"success",
             data : {
                 tour
             }  
         })
-    }
-    catch(err)
-    {
-        res.status(200).json({
-            "status":"success",
-            message:err
-        })
-    }
-
-}
+  
+})
 
 
 
- exports.updateTour =async (req,res)=>{
-
-    try {
-
-        const tour = await Tour.findByIdAndUpdate(req.params.id,req.body,{
+ exports.updateTour = catchAsync (async (req,res,next)=>{
+    
+    const tour = await Tour.findByIdAndUpdate(req.params.id,req.body,{
             new:true,
             runValidators:true
         });
+        //added 404 error with 
+        if(!tour)
+        {
+            return next(new AppError('No tour found with that id',404))
+        }
 
         res.status(200).json({
             status:"success",
@@ -232,37 +199,28 @@ exports.createTour = async(req,res) =>
                 tour
             }
         })
-        
-    } catch (err) {
-        res.status(400).json({
-            "status":"fail",
-            message:err
-        })
-    }
+    
+})
 
-   
-}
-
-exports.delteTour = async(req,res)=>{
-
-    try{
-        
+exports.delteTour = catchAsync(async(req,res,next)=>{
+ 
         // const del = await Tour.deleteOne(req.params.id)
         await Tour.findByIdAndDelete(req.params.id);
         //{_id:"666d7cd402379557e484e691"}
+
+        //added 404 error with 
+        if(!tour)
+            {
+                return next(new AppError('No tour found with that id',404))
+            }
 
         res.status(204).json({  //204 -> no content     
             status : "Success",
             data : null
         })
-    }catch(err){
-        res.status(400).json({
-            "status":"fail",
-            message:err
-        })
-    }
+ 
     
-}
+})
  
 
 ////////////////////////////////////////////////////////////////////////////////

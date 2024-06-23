@@ -10,11 +10,12 @@
     "object-shorthand": "off",
     "no-process-exit": "off",
     "no-param-reassign": "off",
-    "no-return-await": "off",
+    "no-return-await": "on",
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }]
+    // "arrow-body-style": ["error", "never"]
     // "no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}]
   }
 }

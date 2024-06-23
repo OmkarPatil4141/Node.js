@@ -98,7 +98,7 @@ ________________________________________________________________________________
       means when we keep custom middleware in between gettours and by id 
 
 ✅ e.g we require Date at one of the route then we use middleware to fetch the date from req and then use it in route 
-
+✅ middlewares are executed in the sequence they are defined
 ______________________________________________________________________________________________________________________________________
 Third party middleware function called morgan
 ✅ It allows us to see request data right in console 
@@ -211,3 +211,26 @@ ________________________________________________________________________________
       we simply have to use in all of the Aggregations so we can simply not copy paste at all places
 _____________________________________________________________________________________________________________________________________
 
+✅ Data Validation in mongoose  on data coming from model
+    it is process of checking entered values are in right format in each field for our document schema and that values
+    actually been entered for all the required fields.
+
+✅ Sanitization : which is to ensure that the inputted data is is basically clean , i.e. there is no malicious
+    code injected in database, means never ever accept the inpputted data as it is from users
+
+_____________________________________________________________________________________________________________________________________
+✅error handling:-
+
+✅ 1. Undefined routes :-> app.all('*', (req,res,next)) for all routes that we mention after actual  routes at last 
+      (same as Angular)..
+
+✅ 2. For express we write global express erro handling middleware which will handle all errors
+         coming from all over application (central err handling middleware)
+   🔥 whenever we pass argument to next(''), express will automatically know that there ways  
+      an an error and that applies to every next function in every next middleware
+      so it will assume that there is error and it will skip all the middlewares in stack and sent error
+      that we passed to our global handling middleware(mhanje jith parameter ala tithun direct flow towrads global middleware)
+
+
+✅ Instead of creating own error we can create our own Err class as a good practice
+✅ stackStrace gives info that where the error happens

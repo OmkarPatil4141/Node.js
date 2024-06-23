@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const slugify = require('slugify')
+const validator = require('validator')
 
 const tourSchema = new mongoose.Schema({
     // name:String ---> we can specify in that way mongoose uses native javascript datatpes
@@ -10,15 +11,21 @@ const tourSchema = new mongoose.Schema({
     name:
     {
         type:String,
-        required : [true,'A tour must have a name'],
+        required : [true,'A tour must have a name'],//it is a validator
         unique : true,
-        trim:true
+        trim:true,
+        //validators
+        maxlength:[40,'A tour have maximum length less than or equal to 40 characters'],
+        minlength:[10,'A tour have minimum length more than or equal to 10 characters'],
+
+        // validate:[validator.isAlpha,'The tour name should be in alphabets']
     },
     slug: String,
     duration:
     {
         type:Number,
         required : [true,'A tour must have a duration'],
+
     },
     maxGroupSize:
     {
@@ -30,13 +37,20 @@ const tourSchema = new mongoose.Schema({
     {
         type:String,
         required : [true,'A tour must have a difficulty'],
-
+        //validator
+        enum:{
+                values:['easy','medium','difficult'],
+                message:"Difficulty is either: easy , difficult or medium"
+        }
     },
 
     ratingsAverage:
     {
         type:Number,
-        default:4.5
+        default:4.5,
+        //Validator
+        min:[1.0, "Ratings must be above 1.0"],
+        max:[5.0, "Ratings must be below 5.0"],
     },
 
     ratingsQuantity:
@@ -51,7 +65,16 @@ const tourSchema = new mongoose.Schema({
         required : [true,'A tour must have a price'],
     },
 
-    priceDiscount:Number,
+    priceDiscount:{
+        type:Number,
+        validate:{
+        validator:function(val){
+                //this only points to current doc on newly creation of doc
+                return val < this.price
+            },
+            message:'Discount price({VALUE})should be below regular price'
+        }
+    },
 
     summary:
     {
@@ -127,8 +150,8 @@ tourSchema.pre(/^find/,function(next){
 
 
 tourSchema.post(/^find/, function(docs,next){
-    console.log(docs);
-    console.log(`Querry took ${Date.now()-this.start} milliseconds`);
+    // console.log(docs);
+    // console.log(`Querry took ${Date.now()-this.start} milliseconds`);
     next();
 })
 
